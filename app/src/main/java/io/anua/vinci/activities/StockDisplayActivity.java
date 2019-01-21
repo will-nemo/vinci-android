@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,19 +45,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StockDisplayActivity extends AppCompatActivity implements StockAdapterListener {
 
     /**************************
-     * Constants
-     *************************/
-
-    //EXAMPLE OF THE STOCKS THAT ARE PARSED FROM THE FIRESTORE
-    public static String DEFAULT_SYMBOLS = "aapl,aap,fb,tsla,crsp";
-
-    /**************************
      * Private Members
      *************************/
 
     private RecyclerView recyclerView;
     private UserStockAdapter userStockAdapter;
     private ProgressDialog progressDialog;
+
+    private SwipeRefreshLayout pullToRefresh;
 
     private FirebaseFirestore firebaseFirestoreService;
 
@@ -76,6 +72,16 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
         recyclerView = findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+
+        pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                progressDialog.show();
+                findUserStocks(); // your code
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
         findUserStocks();
     }
