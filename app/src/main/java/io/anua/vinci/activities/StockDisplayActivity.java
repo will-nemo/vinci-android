@@ -27,7 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import io.anua.vinci.R;
-import io.anua.vinci.adapter.StockAdapter;
+import io.anua.vinci.adapter.UserStockAdapter;
 import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
@@ -55,7 +55,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
      *************************/
 
     private RecyclerView recyclerView;
-    private StockAdapter stockAdapter;
+    private UserStockAdapter userStockAdapter;
     private ProgressDialog progressDialog;
 
     private FirebaseFirestore firebaseFirestoreService;
@@ -153,8 +153,8 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, capitalizedSymbols);
                     if (iexStocks != null && iexResponse.size() > 0) {
                         progressDialog.dismiss();
-                        stockAdapter = new StockAdapter(StockDisplayActivity.this, iexStocks, StockDisplayActivity.this);
-                        recyclerView.setAdapter(stockAdapter);
+                        userStockAdapter = new UserStockAdapter(StockDisplayActivity.this, iexStocks, StockDisplayActivity.this);
+                        recyclerView.setAdapter(userStockAdapter);
                     } else {
                         progressDialog.dismiss();
                         Log.d("Error", "IEX Stock list is: null");

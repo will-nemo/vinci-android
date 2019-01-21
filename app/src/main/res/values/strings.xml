@@ -13,4 +13,5 @@
     <!--Search Configuration-->
     <string name="app_label">vinci</string>
     <string name="search_hint">Search...</string>
+    <string name="logo_content_desc">logo</string>
 </resources>

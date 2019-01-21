@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.anua.vinci.R;
-import io.anua.vinci.adapter.StockAdapter;
+import io.anua.vinci.adapter.SearchedStockAdapter;
 import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
@@ -35,7 +35,7 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
 
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
-    private StockAdapter stockAdapter;
+    private SearchedStockAdapter searchedStockAdapter;
 
     /**************************
      * LifeCycle Methods
@@ -116,8 +116,8 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
                     if (iexStocks != null && iexResponse.size() > 0) {
                         progressDialog.dismiss();
                         //TODO: Create Search adapter to show this is a different format
-                        stockAdapter = new StockAdapter(StockSearchActivity.this, iexStocks, StockSearchActivity.this);
-                        recyclerView.setAdapter(stockAdapter);
+                        searchedStockAdapter = new SearchedStockAdapter(StockSearchActivity.this, iexStocks, StockSearchActivity.this);
+                        recyclerView.setAdapter(searchedStockAdapter);
                     } else {
                         progressDialog.dismiss();
                         Log.d("Error", "IEX Stock list is: null");
