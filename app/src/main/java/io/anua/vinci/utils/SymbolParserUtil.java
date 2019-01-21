@@ -34,10 +34,14 @@ public class SymbolParserUtil {
     public static ArrayList<String> capitalizeSymbols(String[] symbols) {
         if(symbols != null){
             for(int i = 0; i < symbols.length; i++){
-                symbols[i] = symbols[i].toUpperCase();
+                symbols[i] = capitalizeSymbol(symbols[i]);
             }
             return new ArrayList<>(Arrays.asList(symbols));
         }
         return null;
+    }
+
+    public static String capitalizeSymbol (String symbol) {
+        return symbol.toUpperCase();
     }
 }

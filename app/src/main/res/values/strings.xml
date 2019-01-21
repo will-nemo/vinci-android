@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">vinci</string>
+
+    <!--Stock Display Fillers-->
     <string name="symbol_filler">STK</string>
     <string name="company_name_filler">Company Name</string>
     <string name="realtime_value_filler">000.00</string>
@@ -8,4 +10,7 @@
     <string name="password_filler">password</string>
     <string name="email_filler">email</string>
 
+    <!--Search Configuration-->
+    <string name="app_label">vinci</string>
+    <string name="search_hint">Search...</string>
 </resources>

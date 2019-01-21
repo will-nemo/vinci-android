@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.anua.vinci">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".activities.StockDisplayActivity"
-            android:parentActivityName="io.anua.vinci.activities.StockDisplayActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="io.anua.vinci.activities.StockDisplayActivity" />
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/searchable" />
+        <activity android:name=".activities.StockDisplayActivity">
+            <meta-data android:name="android.app.default_searchable"
+                android:value=".StockSearchActivity" />
         </activity>
-        <activity android:name=".activities.CreateAccountActivity"></activity>
+        <activity android:name=".activities.CreateAccountActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +27,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.StockSearchActivity"></activity>
+        <activity
+            android:name=".activities.StockSearchActivity"
+            android:parentActivityName="io.anua.vinci.activities.StockDisplayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.anua.vinci.activities.StockDisplayActivity" />
+        </activity>
+
+
+
     </application>
 
 </manifest>
