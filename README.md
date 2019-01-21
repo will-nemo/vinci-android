@@ -5,7 +5,7 @@ Android Mobile Application to view technology stocks.
 
 # IEX Trading Base URL
 
-"https://api.iextrading.com/1.0/"
+https://api.iextrading.com/1.0/
 
 -----------------------------------------------------------
  
