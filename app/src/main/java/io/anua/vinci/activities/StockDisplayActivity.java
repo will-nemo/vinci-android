@@ -48,6 +48,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
      *************************/
 
     //EXAMPLE OF THE STOCKS THAT ARE PARSED FROM THE FIRESTORE
+    public static String DEFAULT_SYMBOLS = "aapl,aap,fb,tsla,crsp";
 
     /**************************
      * Private Members
