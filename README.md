@@ -3,7 +3,7 @@ Android Mobile Application to view technology stocks.
 
 -----------------------------------------------------------
  
-# Creating branch for Vinci
+# Creating branch
 
 Format for branch: Type/AVB-####-description
 
