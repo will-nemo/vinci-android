@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "948712448781",
+    "firebase_url": "https://vinci-e7bb0.firebaseio.com",
+    "project_id": "vinci-e7bb0",
+    "storage_bucket": "vinci-e7bb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948712448781:android:4a1e97b71984bd8f",
+        "android_client_info": {
+          "package_name": "io.anua.vinci"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948712448781-e31h643882npm086hs832jfdudn4s3og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.anua.vinci",
+            "certificate_hash": "2fa154c1faf1661709a82fa15ed119a758852c43"
+          }
+        },
+        {
+          "client_id": "948712448781-96q6ofpuljh0fdiio8pc6mtpohfnnrd3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD42C8bsJ7E1CrUzyFL_U66RDT2cMjirGE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948712448781-96q6ofpuljh0fdiio8pc6mtpohfnnrd3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

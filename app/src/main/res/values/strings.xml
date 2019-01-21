@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">vinci</string>
+    <string name="symbol_filler">STK</string>
+    <string name="company_name_filler">Company Name</string>
+    <string name="realtime_value_filler">000.00</string>
+    <string name="primary_market_filler">NASDAQ</string>
+    <string name="submit_button_text">SUBMIT</string>
+    <string name="password_filler">password</string>
+    <string name="email_filler">email</string>
+
+</resources>
