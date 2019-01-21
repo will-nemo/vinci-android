@@ -15,7 +15,7 @@ import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
 import io.anua.vinci.utils.StockAdapterUtil;
 
-public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder>  {
+public class UserStockAdapter extends RecyclerView.Adapter<UserStockAdapter.StockViewHolder>  {
 
     /**************************
      * Private Members
@@ -29,7 +29,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
      * Constructor
      *************************/
 
-    public StockAdapter(Context context, List<IEXResponse> defaultStocks, StockAdapterListener listener) {
+    public UserStockAdapter(Context context, List<IEXResponse> defaultStocks, StockAdapterListener listener) {
         this.context = context;
         this.listener = listener;
         this.stockList = defaultStocks;
@@ -42,7 +42,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHol
     @Override
     public StockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.stock_row, parent, false);
+                .inflate(R.layout.user_stock_row, parent, false);
         return new StockViewHolder(itemView);
     }
 

@@ -41,17 +41,19 @@ dependencies {
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.12'
     // Optional -- Robolectric environment
-    testImplementation 'androidx.test:core:1.0.0'
+    testImplementation 'androidx.test:core:1.1.0'
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:1.10.19'
 
     /*** FireBase Core ***/
-    implementation 'com.google.firebase:firebase-core:16.0.5'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
 
     /*** FireBase Authentication ***/
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
 
     /*** FireBase Firestore ***/
-    implementation 'com.google.firebase:firebase-firestore:17.1.4'
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
 
+    /*** Picasso ***/
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
