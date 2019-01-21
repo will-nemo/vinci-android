@@ -1,5 +1,8 @@
 package io.anua.vinci.activities;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import android.app.ProgressDialog;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -80,12 +86,31 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
 
         findUserStocks();
 
+        //TODO: Delete Fab if using a search widget to add new stock objets
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StockDisplayActivity.this, StockSearchActivity.class));
+//                onSearchRequested();
+//                startActivity(new Intent(StockDisplayActivity.this, StockSearchActivity.class));
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, StockSearchActivity.class)));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by defaul
+
+        return true;
     }
 
     /**************************
