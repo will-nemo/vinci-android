@@ -3,9 +3,7 @@ package io.anua.vinci.activities;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +16,6 @@ import java.util.Map;
 import android.app.ProgressDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -31,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import io.anua.vinci.R;
 import io.anua.vinci.adapter.StockAdapter;
+import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
@@ -51,8 +49,6 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
 
     //EXAMPLE OF THE STOCKS THAT ARE PARSED FROM THE FIRESTORE
     public static String DEFAULT_SYMBOLS = "aapl,aap,fb,tsla,crsp";
-    public static String BASE_URL = "https://api.iextrading.com/1.0/";
-    public static String LOADING_DIALOG = "Loading....";
 
     /**************************
      * Private Members
@@ -61,7 +57,6 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
     private RecyclerView recyclerView;
     private StockAdapter stockAdapter;
     private ProgressDialog progressDialog;
-    private FloatingActionButton floatingActionButton;
 
     private FirebaseFirestore firebaseFirestoreService;
 
@@ -74,10 +69,8 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_stock);
 
-        floatingActionButton = findViewById(R.id.fab);
-
         progressDialog = new ProgressDialog(this, R.style.AppCompatProgressDialogStyle);
-        progressDialog.setMessage(LOADING_DIALOG);
+        progressDialog.setMessage(Vinci_MetadataConstants.LOADING_DIALOG);
         progressDialog.show();
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -85,15 +78,6 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
         recyclerView.setLayoutManager(layoutManager);
 
         findUserStocks();
-
-        //TODO: Delete Fab if using a search widget to add new stock objets
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                onSearchRequested();
-//                startActivity(new Intent(StockDisplayActivity.this, StockSearchActivity.class));
-            }
-        });
     }
 
     @Override
@@ -106,7 +90,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 
-        // Assumes current activity is the searchable activity
+        // Directs current activity to the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, StockSearchActivity.class)));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by defaul
 
@@ -151,7 +135,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
      */
     public void loadDefaultStocks(final String userStocks) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Vinci_MetadataConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -167,10 +151,8 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
                     ArrayList<String> capitalizedSymbols = SymbolParserUtil.capitalizeSymbols(parseSymbols);
 
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, capitalizedSymbols);
-                    if (iexStocks != null) {
+                    if (iexStocks != null && iexResponse.size() > 0) {
                         progressDialog.dismiss();
-                        View view = findViewById(R.id.fab);
-                        view.setVisibility(View.VISIBLE);
                         stockAdapter = new StockAdapter(StockDisplayActivity.this, iexStocks, StockDisplayActivity.this);
                         recyclerView.setAdapter(stockAdapter);
                     } else {

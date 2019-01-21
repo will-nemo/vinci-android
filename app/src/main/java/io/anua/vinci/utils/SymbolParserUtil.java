@@ -12,7 +12,6 @@ public class SymbolParserUtil {
     /* parses the string of symbols passed in
      * uses the delimiter ','
      *
-     * @attribute parseSymbols
      * @method parseSymbols
      * @param {@link String}
      * @returns {@link String[]}
@@ -26,7 +25,6 @@ public class SymbolParserUtil {
 
     /* capitalizes String array of symbols
      *
-     * @attribute capitalizeSymbols
      * @method capitalizeSymbols
      * @param {@link String[]}
      * @returns {@link ArrayList<{@link String}>}
@@ -41,6 +39,12 @@ public class SymbolParserUtil {
         return null;
     }
 
+    /* capitalizes a single symbol
+     *
+     * @method capitalizeSymbol
+     * @param {@link String}
+     * @returns {@link String}
+     */
     public static String capitalizeSymbol (String symbol) {
         return symbol.toUpperCase();
     }

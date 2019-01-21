@@ -4,15 +4,10 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +15,7 @@ import java.util.Map;
 
 import io.anua.vinci.R;
 import io.anua.vinci.adapter.StockAdapter;
+import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
@@ -33,12 +29,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class StockSearchActivity extends AppCompatActivity implements StockAdapterListener {
 
-    public static String BASE_URL = "https://api.iextrading.com/1.0/";
-    public static String LOADING_DIALOG = "Loading....";
+    /**************************
+     * Private Members
+     *************************/
 
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private StockAdapter stockAdapter;
+
+    /**************************
+     * LifeCycle Methods
+     *************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
         setContentView(R.layout.activity_stock_search);
 
         progressDialog = new ProgressDialog(this, R.style.AppCompatProgressDialogStyle);
-        progressDialog.setMessage(LOADING_DIALOG);
+        progressDialog.setMessage(Vinci_MetadataConstants.LOADING_DIALOG);
         progressDialog.show();
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -63,14 +64,26 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
         handleIntent(intent);
     }
 
-    private void handleIntent(Intent intent) {
+    /**************************
+     * Private Methods
+     *************************/
 
+    /*  Handles the search query carried by the intent and loads with it
+     *
+     * @method handleIntent
+     * @param {@link Intent}
+     * @private
+     */
+    private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-
             loadDefaultStocks(query);
         }
     }
+
+    /**************************
+     * Public Methods
+     *************************/
 
     /* loads the IEXResponse Objects into the Recycler View
      *
@@ -79,8 +92,9 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
      * @public
      */
     public void loadDefaultStocks(final String userStocks) {
+        //TODO: Function should search for stocks, not pull up stocks based of symbols
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Vinci_MetadataConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -99,8 +113,9 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
                     symbolList.add(capitalizedSymbol);
 
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, symbolList);
-                    if (iexStocks != null) {
+                    if (iexStocks != null && iexResponse.size() > 0) {
                         progressDialog.dismiss();
+                        //TODO: Create Search adapter to show this is a different format
                         stockAdapter = new StockAdapter(StockSearchActivity.this, iexStocks, StockSearchActivity.this);
                         recyclerView.setAdapter(stockAdapter);
                     } else {
@@ -132,6 +147,7 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
         });
     }
 
+    //TODO: Delete this after new way to search stocks
     /* Builds the list of quotes to display in the recycler view
      *
      * @method buildIEXResponseList
@@ -150,6 +166,6 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
 
     @Override
     public void onStockSelected(Quote result) {
-
+        //TODO: Add ability to open stock for more information
     }
 }
