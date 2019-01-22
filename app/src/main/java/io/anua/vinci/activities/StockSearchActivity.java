@@ -2,12 +2,16 @@ package io.anua.vinci.activities;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +52,6 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
 
         progressDialog = new ProgressDialog(this, R.style.AppCompatProgressDialogStyle);
         progressDialog.setMessage(Vinci_MetadataConstants.LOADING_DIALOG);
-        progressDialog.show();
 
         recyclerView = findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -60,8 +63,24 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         handleIntent(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
+        // Directs current activity to the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        return true;
     }
 
     /**************************
@@ -76,6 +95,7 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
      */
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            progressDialog.show();
             String query = intent.getStringExtra(SearchManager.QUERY);
             loadDefaultStocks(query);
         }
@@ -114,10 +134,10 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
 
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, symbolList);
                     if (iexStocks != null && iexResponse.size() > 0) {
-                        progressDialog.dismiss();
                         //TODO: Create Search adapter to show this is a different format
                         searchedStockAdapter = new SearchedStockAdapter(StockSearchActivity.this, iexStocks, StockSearchActivity.this);
                         recyclerView.setAdapter(searchedStockAdapter);
+                        progressDialog.dismiss();
                     } else {
                         progressDialog.dismiss();
                         Log.d("Error", "IEX Stock list is: null");

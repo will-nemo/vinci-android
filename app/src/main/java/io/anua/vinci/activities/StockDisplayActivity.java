@@ -98,7 +98,6 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
 
         // Directs current activity to the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, StockSearchActivity.class)));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by defaul
 
         return true;
     }
@@ -158,9 +157,9 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
 
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, capitalizedSymbols);
                     if (iexStocks != null && iexResponse.size() > 0) {
-                        progressDialog.dismiss();
                         userStockAdapter = new UserStockAdapter(StockDisplayActivity.this, iexStocks, StockDisplayActivity.this);
                         recyclerView.setAdapter(userStockAdapter);
+                        progressDialog.dismiss();
                     } else {
                         progressDialog.dismiss();
                         Log.d("Error", "IEX Stock list is: null");
