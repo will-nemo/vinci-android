@@ -40,6 +40,7 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private SearchedStockAdapter searchedStockAdapter;
+    ArrayList<String> defaultUserStocks;
 
     /**************************
      * LifeCycle Methods
@@ -87,7 +88,9 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
      * Private Methods
      *************************/
 
-    /*  Handles the search query carried by the intent and loads with it
+    /* Handles the search query carried by the intent and loads with it
+     * If the search is not from the Searchable activity, will have bundle with
+     * the userDefaultStocks
      *
      * @method handleIntent
      * @param {@link Intent}
@@ -97,6 +100,12 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             progressDialog.show();
             String query = intent.getStringExtra(SearchManager.QUERY);
+            Bundle appData = intent.getBundleExtra(SearchManager.APP_DATA);
+
+            if (appData != null) {
+                defaultUserStocks = appData.getStringArrayList(Vinci_MetadataConstants.DEFAULT_USER_STOCKS);
+            }
+
             loadDefaultStocks(query);
         }
     }
