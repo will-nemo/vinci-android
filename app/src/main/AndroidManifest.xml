@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".activities.StockSearchActivity"
-            android:parentActivityName="io.anua.vinci.activities.StockDisplayActivity">
+            android:parentActivityName="io.anua.vinci.activities.StockDisplayActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
