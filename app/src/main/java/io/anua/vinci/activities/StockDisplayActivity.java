@@ -3,6 +3,7 @@ package io.anua.vinci.activities;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
     private RecyclerView recyclerView;
     private UserStockAdapter userStockAdapter;
     private ProgressDialog progressDialog;
+    private ArrayList<String> defaultUserStocks;
 
     private SwipeRefreshLayout pullToRefresh;
 
@@ -99,6 +101,29 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
         // Directs current activity to the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, StockSearchActivity.class)));
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent searchIntent = new Intent(StockDisplayActivity.this, StockSearchActivity.class);
+                searchIntent.putExtra(SearchManager.QUERY, query);
+
+                Bundle appData = new Bundle();
+                appData.putStringArrayList(Vinci_MetadataConstants.DEFAULT_USER_STOCKS, defaultUserStocks);
+                searchIntent.putExtra(SearchManager.APP_DATA, appData); // pass the search context data
+                searchIntent.setAction(Intent.ACTION_SEARCH);
+
+                startActivity(searchIntent);
+
+                // we start the search activity manually
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
         return true;
     }
 
@@ -155,6 +180,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
                     String[] parseSymbols = SymbolParserUtil.parseSymbols(userStocks);
                     ArrayList<String> capitalizedSymbols = SymbolParserUtil.capitalizeSymbols(parseSymbols);
 
+                    defaultUserStocks = capitalizedSymbols;
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, capitalizedSymbols);
                     if (iexStocks != null && iexResponse.size() > 0) {
                         userStockAdapter = new UserStockAdapter(StockDisplayActivity.this, iexStocks, StockDisplayActivity.this);
