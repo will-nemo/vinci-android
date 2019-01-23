@@ -10,7 +10,9 @@
     android:layout_margin="7dp"
     android:elevation="120dp"
     android:layout_gravity="center"
-    app:cardBackgroundColor="@color/colorPrimaryDark">
+    app:cardBackgroundColor="@color/colorPrimaryDark"
+    android:clickable="true"
+    android:focusable="true">
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -21,11 +23,14 @@
         android:paddingLeft="@dimen/row_padding_side"
         android:paddingTop="@dimen/row_padding"
         android:paddingRight="@dimen/row_padding_side"
-        android:paddingBottom="@dimen/row_padding">
+        android:paddingBottom="@dimen/row_padding"
+        >
 
         <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="72dp">
+            android:layout_height="72dp"
+            >
 
             <TextView
                 android:id="@+id/stock_symbol"
@@ -40,7 +45,8 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/company_name"

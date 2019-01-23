@@ -14,4 +14,10 @@ public class Vinci_MetadataConstants {
 
     //Bundle Constants
     public static String DEFAULT_USER_STOCKS = "defaultUserStocks";
+
+    //Stock Object
+    public static String STOCK_OBJECT = "stockObject";
+
+    public static String IS_USER_STOCK = "isUserStock";
+    public static String COMPANY_NAME = "companyName";
 }

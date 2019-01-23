@@ -1,7 +1,6 @@
 package io.anua.vinci.listener;
 
-
-import io.anua.vinci.model.Quote;
+import io.anua.vinci.model.IEXResponse;
 
 public interface StockAdapterListener {
 
@@ -14,7 +13,7 @@ public interface StockAdapterListener {
      *
      * @attribute onSchoolSelected
      * @method onSchoolSelected
-     * @param {@link Quote}
+     * @param {@link IEXResponse}
      */
-    void onStockSelected(Quote result);
+    void onStockSelected(IEXResponse iexObject);
 }

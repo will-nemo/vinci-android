@@ -34,7 +34,6 @@ import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
-import io.anua.vinci.model.Quote;
 import io.anua.vinci.model.User;
 import io.anua.vinci.utils.*;
 import retrofit2.Call;
@@ -223,8 +222,11 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
      * @public
      */
     @Override
-    public void onStockSelected(Quote result) {
-        //TODO: Add ability to open stock for more information
+    public void onStockSelected(IEXResponse iexObject) {
+        Intent intent = new Intent(StockDisplayActivity.this, StockObjectActivity.class)
+                .putExtra(Vinci_MetadataConstants.STOCK_OBJECT, buildStockObject(iexObject));
+
+        startActivity(intent);
     }
 
     /* Builds the list of quotes to display in the recycler view
@@ -236,10 +238,24 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
      */
     public List<IEXResponse> buildIEXResponseList(Map<String, IEXResponse> iexResponseMap, ArrayList<String> symbols){
         final List<IEXResponse> iexList = new ArrayList<>();
-        IEXResponse iexResponse;
         for (int i = 0; i < symbols.size(); i++) {
             iexList.add((IEXResponse) iexResponseMap.get(symbols.get(i)));
         }
         return iexList;
+    }
+
+    /* Builds the stock Object to be displayed
+     *
+     * @method buildStockObject
+     * @param {@link IEXResponse}
+     * @return {@link Bundle}
+     * @private
+     */
+    private Bundle buildStockObject(IEXResponse iexObject){
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Vinci_MetadataConstants.IS_USER_STOCK, true);
+        bundle.putString(Vinci_MetadataConstants.COMPANY_NAME, iexObject.getQuote().getCompanyName());
+
+        return bundle;
     }
 }

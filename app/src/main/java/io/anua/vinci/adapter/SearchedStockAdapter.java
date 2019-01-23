@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -81,14 +82,13 @@ public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdap
 
         holder.changeValue.setText(changeValueCheck.toString());
 
-//
-//        holder.sName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // send selected contact in callback
-//                listener.onSchoolSelected(stockList.get(position));
-//            }
-//        });
+
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onStockSelected(stockList.get(position));
+            }
+        });
     }
 
     /**************************
@@ -110,6 +110,7 @@ public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdap
         public TextView stockSymbol, companyName,
                 realtimePrice, changeValue, primaryStockExchange;
         ImageView logoImageView;
+        public RelativeLayout relativeLayout;
 
         public StockViewHolder(View view) {
             super(view);
@@ -119,6 +120,7 @@ public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdap
             realtimePrice = view.findViewById(R.id.realtime_price);
             changeValue = view.findViewById(R.id.change_value);
             primaryStockExchange = view.findViewById(R.id.stock_market);
+            relativeLayout = view.findViewById(R.id.relative_layout);
         }
 
         public void setCompanyLogo(String companyLogo){
