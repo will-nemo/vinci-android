@@ -143,7 +143,6 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
 
                     List<IEXResponse> iexStocks = buildIEXResponseList(iexResponse, symbolList);
                     if (iexStocks != null && iexResponse.size() > 0) {
-                        //TODO: Create Search adapter to show this is a different format
                         searchedStockAdapter = new SearchedStockAdapter(StockSearchActivity.this, iexStocks, StockSearchActivity.this);
                         recyclerView.setAdapter(searchedStockAdapter);
                         progressDialog.dismiss();
@@ -186,7 +185,6 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
      */
     public List<IEXResponse> buildIEXResponseList(Map<String, IEXResponse> iexResponseMap, ArrayList<String> symbols){
         final List<IEXResponse> iexList = new ArrayList<>();
-        IEXResponse iexResponse;
         for (int i = 0; i < symbols.size(); i++) {
             iexList.add((IEXResponse) iexResponseMap.get(symbols.get(i)));
         }
@@ -194,7 +192,25 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
     }
 
     @Override
-    public void onStockSelected(Quote result) {
-        //TODO: Add ability to open stock for more information
+    public void onStockSelected(IEXResponse iexObject) {
+        Intent intent = new Intent(StockSearchActivity.this, StockObjectActivity.class)
+                .putExtra(Vinci_MetadataConstants.STOCK_OBJECT, buildStockObject(iexObject));
+
+        startActivity(intent);
+    }
+
+    /* Builds the stock Object to be displayed
+     *
+     * @method buildStockObject
+     * @param {@link IEXResponse}
+     * @return {@link Bundle}
+     * @private
+     */
+    private Bundle buildStockObject(IEXResponse iexObject){
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Vinci_MetadataConstants.IS_USER_STOCK, true);
+        bundle.putString(Vinci_MetadataConstants.COMPANY_NAME, iexObject.getQuote().getCompanyName());
+
+        return bundle;
     }
 }

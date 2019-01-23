@@ -15,8 +15,16 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/searchable" />
+        <activity
+            android:name=".activities.StockObjectActivity"
+            android:parentActivityName=".activities.StockDisplayActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.anua.vinci.activities.StockDisplayActivity" />
+        </activity>
         <activity android:name=".activities.StockDisplayActivity">
-            <meta-data android:name="android.app.default_searchable"
+            <meta-data
+                android:name="android.app.default_searchable"
                 android:value=".StockSearchActivity" />
         </activity>
         <activity android:name=".activities.CreateAccountActivity" />
@@ -29,8 +37,8 @@
         </activity>
         <activity
             android:name=".activities.StockSearchActivity"
-            android:parentActivityName="io.anua.vinci.activities.StockDisplayActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.StockDisplayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -41,9 +49,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.anua.vinci.activities.StockDisplayActivity" />
         </activity>
-
-
-
     </application>
 
 </manifest>

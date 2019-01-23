@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class UserStockAdapter extends RecyclerView.Adapter<UserStockAdapter.Stoc
     private StockAdapterListener listener;
     private Context context;
     private List<IEXResponse> stockList;
+    IEXResponse selectedStock;
 
     /**************************
      * Constructor
@@ -52,26 +54,26 @@ public class UserStockAdapter extends RecyclerView.Adapter<UserStockAdapter.Stoc
         Float realTimePrice;
         final Double changeValueCheck;
 
-        final IEXResponse stockQuote = stockList.get(position);
-        holder.stockSymbol.setText(stockQuote.getQuote().getStockSymbol());
-        holder.companyName.setText(stockQuote.getQuote().getCompanyName());
+        selectedStock = stockList.get(position);
+        holder.stockSymbol.setText(selectedStock.getQuote().getStockSymbol());
+        holder.companyName.setText(selectedStock.getQuote().getCompanyName());
 
 
-        holder.primaryStockExchange.setText(StockAdapterUtil.formatPrimaryMarket(stockQuote.getQuote().getPrimaryExchange()));
+        holder.primaryStockExchange.setText(StockAdapterUtil.formatPrimaryMarket(selectedStock.getQuote().getPrimaryExchange()));
 
-        realTimePrice = stockQuote.getQuote().getRealtimePrice();
+        realTimePrice = selectedStock.getQuote().getRealtimePrice();
         if(realTimePrice != null) {
             holder.realtimePrice.setText(realTimePrice.toString());
         }
         else {
-            holder.realtimePrice.setText(stockQuote.getQuote().getCloseValue().toString());
+            holder.realtimePrice.setText(selectedStock.getQuote().getCloseValue().toString());
 
         }
 
-        capValue = StockAdapterUtil.formatMarketCapValue(stockQuote.getQuote().getMarketCapValue().toString());
+        capValue = StockAdapterUtil.formatMarketCapValue(selectedStock.getQuote().getMarketCapValue().toString());
         holder.marketCapValue.setText(capValue);
 
-        changeValueCheck = stockQuote.getQuote().getChangeValue();
+        changeValueCheck = selectedStock.getQuote().getChangeValue();
 
         if(changeValueCheck < 0) {
             holder.changeValue.setTextColor(Color.RED);
@@ -81,14 +83,13 @@ public class UserStockAdapter extends RecyclerView.Adapter<UserStockAdapter.Stoc
 
         holder.changeValue.setText(changeValueCheck.toString());
 
-//
-//        holder.sName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // send selected contact in callback
-//                listener.onSchoolSelected(stockList.get(position));
-//            }
-//        });
+
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onStockSelected(stockList.get(position));
+            }
+        });
     }
 
     /**************************
@@ -108,6 +109,7 @@ public class UserStockAdapter extends RecyclerView.Adapter<UserStockAdapter.Stoc
 
         public TextView stockSymbol, companyName,
                 realtimePrice, marketCapValue, changeValue, primaryStockExchange;
+        public RelativeLayout relativeLayout;
 
         public StockViewHolder(View view) {
             super(view);
@@ -117,6 +119,7 @@ public class UserStockAdapter extends RecyclerView.Adapter<UserStockAdapter.Stoc
             marketCapValue = view.findViewById(R.id.marketcap_value);
             changeValue = view.findViewById(R.id.change_value);
             primaryStockExchange = view.findViewById(R.id.stock_market);
+            relativeLayout = view.findViewById(R.id.relative_layout);
         }
     }
 }
