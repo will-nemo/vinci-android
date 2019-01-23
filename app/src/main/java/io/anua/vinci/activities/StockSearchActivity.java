@@ -23,7 +23,6 @@ import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
-import io.anua.vinci.model.Quote;
 import io.anua.vinci.utils.SymbolParserUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
