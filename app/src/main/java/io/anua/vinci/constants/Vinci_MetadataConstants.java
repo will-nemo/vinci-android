@@ -20,4 +20,12 @@ public class Vinci_MetadataConstants {
 
     public static String IS_USER_STOCK = "isUserStock";
     public static String COMPANY_NAME = "companyName";
+    public static String OPEN_VALUE = "open";
+    public static String CLOSE_VALUE = "close";
+    public static String HIGH_VALUE = "high";
+    public static String LOW_VALUE = "low";
+    public static String WEEK_52_HIGH = "week52High";
+    public static String WEEK_52_LOW = "week52Low";
+    public static String MARKET_CAP = "marketCap";
+    public static String LOGO_URL = "url";
 }

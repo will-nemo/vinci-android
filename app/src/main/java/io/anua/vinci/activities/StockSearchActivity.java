@@ -19,6 +19,7 @@ import java.util.Map;
 
 import io.anua.vinci.R;
 import io.anua.vinci.adapter.SearchedStockAdapter;
+import io.anua.vinci.builder.StockObjectBuilder;
 import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
@@ -193,23 +194,9 @@ public class StockSearchActivity extends AppCompatActivity implements StockAdapt
     @Override
     public void onStockSelected(IEXResponse iexObject) {
         Intent intent = new Intent(StockSearchActivity.this, StockObjectActivity.class)
-                .putExtra(Vinci_MetadataConstants.STOCK_OBJECT, buildStockObject(iexObject));
+                .putExtra(Vinci_MetadataConstants.STOCK_OBJECT,
+                        StockObjectBuilder.buildStockObject(iexObject, defaultUserStocks, false));
 
         startActivity(intent);
-    }
-
-    /* Builds the stock Object to be displayed
-     *
-     * @method buildStockObject
-     * @param {@link IEXResponse}
-     * @return {@link Bundle}
-     * @private
-     */
-    private Bundle buildStockObject(IEXResponse iexObject){
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(Vinci_MetadataConstants.IS_USER_STOCK, true);
-        bundle.putString(Vinci_MetadataConstants.COMPANY_NAME, iexObject.getQuote().getCompanyName());
-
-        return bundle;
     }
 }

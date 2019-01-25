@@ -50,6 +50,12 @@ public class Quote {
     @SerializedName("change")
     private Double changeValue;
 
+    @SerializedName("week52High")
+    private Float week52High;
+
+    @SerializedName("week52Low")
+    private Float week52Low;
+
     /**************************
      * Public Methods
      *************************/
@@ -98,11 +104,25 @@ public class Quote {
         return latestTime;
     }
 
-    public Float getRealtimePrice() { return realtimePrice; }
+    public Float getRealtimePrice() {
+        return realtimePrice;
+    }
 
-    public Long getMarketCapValue() { return marketCapValue; }
+    public Long getMarketCapValue() {
+        return marketCapValue;
+    }
 
-    public Double getChangeValue() { return changeValue; }
+    public Double getChangeValue() {
+        return changeValue;
+    }
+
+    public Float getWeek52High() {
+        return week52High;
+    }
+
+    public Float getWeek52Low() {
+        return week52Low;
+    }
 
     /**************************
      * Constructor
