@@ -12,6 +12,7 @@ https://api.iextrading.com/1.0/
 # IEX Reference Documentation
 
 https://iextrading.com/developer/docs/
+
 -----------------------------------------------------------
 
 # Creating branch
