@@ -15,8 +15,8 @@
     android:focusable="true">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="408dp"
+        android:layout_height="58dp"
 
         android:clickable="true"
         android:focusable="true"
@@ -27,25 +27,19 @@
 
         <RelativeLayout
             android:id="@+id/relative_layout"
-            android:layout_width="match_parent"
-            android:layout_height="72dp">
-
-            <ImageView
-                android:paddingTop="10dp"
-                android:id="@+id/company_logo"
-                android:layout_width="59dp"
-                android:layout_height="54dp"
-                android:contentDescription="@string/logo_content_desc"
-                app:srcCompat="@android:drawable/btn_dialog" />
+            android:layout_width="403dp"
+            android:layout_height="49dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-2dp">
 
             <TextView
                 android:id="@+id/stock_symbol"
-                android:layout_width="76dp"
+                android:layout_width="381dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="68dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="0dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/symbol_filler"
                 android:textAlignment="textStart"
@@ -55,62 +49,17 @@
 
             <TextView
                 android:id="@+id/company_name"
-                android:layout_width="152dp"
-                android:layout_height="31dp"
+                android:layout_width="386dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="66dp"
-                android:layout_marginTop="37dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="29dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/company_name_filler"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/realtime_price"
-                android:layout_width="58dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="313dp"
-                android:layout_marginTop="43dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/realtime_value_filler"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/change_value"
-                android:layout_width="61dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="310dp"
-                android:layout_marginTop="25dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/realtime_value_filler"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/stock_market"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="301dp"
-                android:layout_marginTop="3dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/primary_market_filler"
-                android:textAlignment="textEnd"
-                android:textColor="@color/recyclerViewColor"
-                android:textSize="18sp"
                 android:textStyle="normal" />
 
         </RelativeLayout>

@@ -52,36 +52,10 @@ public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdap
 
     @Override
     public void onBindViewHolder(StockViewHolder holder, final int position) {
-        Float realTimePrice;
-        final Double changeValueCheck;
-
         final IEXResponse searchedStock = stockList.get(position);
 
-        holder.setCompanyLogo(searchedStock.getLogo().getLogoURL());
         holder.stockSymbol.setText(searchedStock.getQuote().getStockSymbol());
         holder.companyName.setText(searchedStock.getQuote().getCompanyName());
-
-        holder.primaryStockExchange.setText(StockAdapterUtil.formatPrimaryMarket(searchedStock.getQuote().getPrimaryExchange()));
-
-        realTimePrice = searchedStock.getQuote().getRealtimePrice();
-        if(realTimePrice != null) {
-            holder.realtimePrice.setText(realTimePrice.toString());
-        }
-        else {
-            holder.realtimePrice.setText(searchedStock.getQuote().getCloseValue().toString());
-
-        }
-
-        changeValueCheck = searchedStock.getQuote().getChangeValue();
-
-        if(changeValueCheck < 0) {
-            holder.changeValue.setTextColor(Color.RED);
-        }else {
-            holder.changeValue.setTextColor(Color.GREEN);
-        }
-
-        holder.changeValue.setText(changeValueCheck.toString());
-
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,9 +81,7 @@ public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdap
     public class StockViewHolder extends RecyclerView.ViewHolder {
 
         View adapterView;
-        public TextView stockSymbol, companyName,
-                realtimePrice, changeValue, primaryStockExchange;
-        ImageView logoImageView;
+        public TextView stockSymbol, companyName;
         public RelativeLayout relativeLayout;
 
         public StockViewHolder(View view) {
@@ -117,15 +89,7 @@ public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdap
             adapterView = view;
             stockSymbol = view.findViewById(R.id.stock_symbol);
             companyName = view.findViewById(R.id.company_name);
-            realtimePrice = view.findViewById(R.id.realtime_price);
-            changeValue = view.findViewById(R.id.change_value);
-            primaryStockExchange = view.findViewById(R.id.stock_market);
             relativeLayout = view.findViewById(R.id.relative_layout);
-        }
-
-        public void setCompanyLogo(String companyLogo){
-            logoImageView = (ImageView) adapterView.findViewById(R.id.company_logo);
-            Picasso.get().load(companyLogo).into(logoImageView);
         }
     }
 }

@@ -9,6 +9,10 @@ import io.anua.vinci.R;
 
 public class StockObjectActivity extends AppCompatActivity {
 
+    /**************************
+     * LifeCycle Methods
+     *************************/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
