@@ -1,23 +1,18 @@
 package io.anua.vinci.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import io.anua.vinci.R;
 import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
-import io.anua.vinci.utils.StockAdapterUtil;
 
 public class SearchedStockAdapter extends RecyclerView.Adapter<SearchedStockAdapter.StockViewHolder>  {
 
