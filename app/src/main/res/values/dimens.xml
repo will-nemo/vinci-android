@@ -17,5 +17,5 @@
     <dimen name="contact_name">15dp</dimen>
     <dimen name="contact_number">12dp</dimen>
     <dimen name="query_row_padding">5dp</dimen>
-    <dimen name="query_row_padding_side">4dp</dimen>
+    <dimen name="query_row_padding_side">3dp</dimen>
 </resources>
