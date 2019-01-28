@@ -35,6 +35,7 @@ public class StockObjectBuilder {
 
         bundle.putStringArrayList(Vinci_MetadataConstants.DEFAULT_USER_STOCKS, defaultUserStocks);
 
+        bundle.putString(Vinci_MetadataConstants.STOCK_SYMBOL, iexObject.getQuote().getStockSymbol());
         bundle.putString(Vinci_MetadataConstants.COMPANY_NAME, iexObject.getQuote().getCompanyName());
         bundle.putString(Vinci_MetadataConstants.LOGO_URL, iexObject.getLogo().getLogoURL());
 
@@ -46,6 +47,8 @@ public class StockObjectBuilder {
         bundle.putFloat(Vinci_MetadataConstants.LOW_VALUE, iexObject.getQuote().getLowValue());
         bundle.putFloat(Vinci_MetadataConstants.WEEK_52_HIGH, iexObject.getQuote().getWeek52High());
         bundle.putFloat(Vinci_MetadataConstants.WEEK_52_LOW, iexObject.getQuote().getWeek52Low());
+
+        bundle.putDouble(Vinci_MetadataConstants.CHANGE_VALUE, iexObject.getQuote().getChangeValue());
 
         return bundle;
     }
