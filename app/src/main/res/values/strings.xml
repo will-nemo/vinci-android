@@ -14,4 +14,12 @@
     <string name="app_label">vinci</string>
     <string name="search_hint">Search...</string>
     <string name="logo_content_desc">logo</string>
+    <string name="open_value_filler">open: Value</string>
+    <string name="close_value_filler">close: Value</string>
+    <string name="high_value_filler">high: Value</string>
+    <string name="low_value_filler">low: Value</string>
+    <string name="w52_high_value_filler">w52 high: Value</string>
+    <string name="w52_low_value_filler">w52 low: Value</string>
+    <string name="market_cap_value_object_filler">market cap: Value</string>
+    <string name="change_value_filler">Change Value</string>
 </resources>
