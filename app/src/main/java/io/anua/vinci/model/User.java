@@ -17,7 +17,6 @@ public class User {
     private String userID;
     private Long createdTimeOfUser;
     private String userStocks;
-    private Integer numberOfStocks;
 
     /**************************
      * Constructor
@@ -29,7 +28,6 @@ public class User {
         this.userID = userID;
         this.createdTimeOfUser = createdTimeOfUser;
         this.userStocks = DEFAULT_STOCKS;
-        this.numberOfStocks = 5;
     }
 
     /**************************
@@ -66,14 +64,6 @@ public class User {
 
     public void setUserStocks(String userStocks) {
         this.userStocks = userStocks;
-    }
-
-    public Integer getNumberOfStocks() {
-        return numberOfStocks;
-    }
-
-    public void setNumberOfStocks(Integer numberOfStocks) {
-        this.numberOfStocks = numberOfStocks;
     }
 
     public String getUserID() {

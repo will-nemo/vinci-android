@@ -23,6 +23,26 @@ public class SymbolParserUtil {
         return null;
     }
 
+    /* concatenates symbols from ArrayList together
+     *
+     * @method concatSymbols
+     * @param {@link ArrayList<{@link String}>}
+     * @returns {@link String}
+     */
+    public static String concatSymbols(ArrayList<String> symbolsList) {
+        String symbol = "";
+
+        for(int i = 0; i < symbolsList.size(); i++) {
+            if(i != symbolsList.size()-1) {
+                symbol = symbol.concat(symbolsList.get(i).toLowerCase() + ",");
+            }
+            else {
+                symbol = symbol.concat(symbolsList.get(i).toLowerCase());
+            }
+        }
+        return symbol;
+    }
+
     /* capitalizes String array of symbols
      *
      * @method capitalizeSymbols
@@ -31,7 +51,7 @@ public class SymbolParserUtil {
      */
     public static ArrayList<String> capitalizeSymbols(String[] symbols) {
         if(symbols != null){
-            for(int i = 0; i < symbols.length; i++){
+            for(int i = 0; i < symbols.length; i++) {
                 symbols[i] = capitalizeSymbol(symbols[i]);
             }
             return new ArrayList<>(Arrays.asList(symbols));
