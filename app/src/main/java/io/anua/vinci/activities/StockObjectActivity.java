@@ -1,16 +1,26 @@
 package io.anua.vinci.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 import io.anua.vinci.R;
 import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.utils.StockAdapterUtil;
+import io.anua.vinci.utils.SymbolParserUtil;
 
 public class StockObjectActivity extends AppCompatActivity {
 
@@ -18,8 +28,13 @@ public class StockObjectActivity extends AppCompatActivity {
      * Private Members
      *************************/
 
+    private FirebaseAuth firebaseAuthService;
+    private FirebaseFirestore firebaseFirestoreService;
+
     private TextView stockSymbol, companyName, openValue, closeValue, highValue,
             lowValue, week52High, week52Low, marketCap, changeValue;
+
+    private FloatingActionButton floatingActionButton;
 
     /**************************
      * LifeCycle Methods
@@ -34,6 +49,11 @@ public class StockObjectActivity extends AppCompatActivity {
         if(actionBar!= null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        firebaseAuthService = FirebaseAuth.getInstance();
+        firebaseFirestoreService = FirebaseFirestore.getInstance();
+
+        floatingActionButton = findViewById(R.id.fab);
 
         stockSymbol = findViewById(R.id.stock_symbol);
         companyName = findViewById(R.id.company_name);
@@ -70,10 +90,17 @@ public class StockObjectActivity extends AppCompatActivity {
      * @private
      */
     private void handleIntent(Intent intent) {
-            Bundle stockObjectBundle = intent.getBundleExtra(Vinci_MetadataConstants.STOCK_OBJECT);
+            final Bundle stockObjectBundle = intent.getBundleExtra(Vinci_MetadataConstants.STOCK_OBJECT);
+            final Boolean isUserStock;
+            final String stockSymbolValue;
 
             if (stockObjectBundle != null) {
-                stockSymbol.setText(stockObjectBundle.getString(Vinci_MetadataConstants.STOCK_SYMBOL));
+                View view = findViewById(R.id.fab);
+
+                isUserStock = stockObjectBundle.getBoolean(Vinci_MetadataConstants.IS_USER_STOCK);
+                stockSymbolValue = stockObjectBundle.getString(Vinci_MetadataConstants.STOCK_SYMBOL);
+
+                stockSymbol.setText(stockSymbolValue);
                 companyName.setText(stockObjectBundle.getString(Vinci_MetadataConstants.COMPANY_NAME));
                 openValue.setText(formatFloatValue(stockObjectBundle.getFloat(Vinci_MetadataConstants.OPEN_VALUE), Vinci_MetadataConstants.OPEN_VALUE));
                 closeValue.setText(formatFloatValue(stockObjectBundle.getFloat(Vinci_MetadataConstants.CLOSE_VALUE), Vinci_MetadataConstants.CLOSE_VALUE));
@@ -84,6 +111,34 @@ public class StockObjectActivity extends AppCompatActivity {
                 marketCap.setText(formatMarketCap(stockObjectBundle.getLong(Vinci_MetadataConstants.MARKET_CAP)));
 
                 formatChangeValue(stockObjectBundle.getDouble(Vinci_MetadataConstants.CHANGE_VALUE));
+
+                if(isUserStock) {
+                    view.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                }
+                else {
+                    view.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00BFA5")));
+                }
+
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<String> defaultUserStocks  = stockObjectBundle.getStringArrayList(Vinci_MetadataConstants.DEFAULT_USER_STOCKS);
+                        if(isUserStock){
+                            defaultUserStocks.remove(defaultUserStocks.indexOf(stockSymbolValue));
+                        }
+                        else {
+                            defaultUserStocks.add(stockSymbol.getText().toString());
+                        }
+
+                        String userID = "";
+                        FirebaseUser firebaseUser = firebaseAuthService.getCurrentUser();
+                        if(firebaseUser != null) {
+                            userID = firebaseUser.getUid();
+                        }
+                        firebaseFirestoreService.collection("users").document(userID).update("userStocks",  SymbolParserUtil.concatSymbols(defaultUserStocks));
+                    }
+                });
+                view.setVisibility(View.VISIBLE);
             }
     }
 

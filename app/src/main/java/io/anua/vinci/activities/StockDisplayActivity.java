@@ -4,7 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,14 +19,13 @@ import android.app.ProgressDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import io.anua.vinci.R;
 import io.anua.vinci.adapter.UserStockAdapter;
@@ -35,7 +34,6 @@ import io.anua.vinci.constants.Vinci_MetadataConstants;
 import io.anua.vinci.interfaces.IEXStockInterface;
 import io.anua.vinci.listener.StockAdapterListener;
 import io.anua.vinci.model.IEXResponse;
-import io.anua.vinci.model.User;
 import io.anua.vinci.utils.*;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -140,21 +138,7 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
         firebaseFirestoreService = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = firebaseFirestoreService.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User userObject = documentSnapshot.toObject(User.class);
-                if(userObject != null){
-                    loadDefaultStocks(userObject.getUserStocks());
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                //TODO: Add failure for this
-                Toast.makeText(StockDisplayActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        registerListener(docRef);
     }
 
     /* loads the IEXResponse Objects into the Recycler View
@@ -243,5 +227,42 @@ public class StockDisplayActivity extends AppCompatActivity implements StockAdap
             iexList.add((IEXResponse) iexResponseMap.get(symbols.get(i)));
         }
         return iexList;
+    }
+
+    /**************************
+     * Private Methods
+     *************************/
+
+    /* Listens for changes in the user object, mainly for a change in user stock
+     *
+     * @method registerListener
+     * @param {@link DocumentReference}
+     * @private
+     */
+    private void registerListener(DocumentReference documentReference) {
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    //TODO: Error screen here
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    if(defaultUserStocks != null) {
+                        if (!SymbolParserUtil.concatSymbols(defaultUserStocks).equals(snapshot.getString("userStocks"))) {
+                            loadDefaultStocks(snapshot.getString("userStocks"));
+                        }
+                    }
+                    else{
+                        loadDefaultStocks(snapshot.getString("userStocks"));
+                    }
+                } else {
+                    //TODO: Error screen here
+                    return;
+                }
+            }
+        });
     }
 }

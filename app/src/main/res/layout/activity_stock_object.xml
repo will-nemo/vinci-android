@@ -138,4 +138,25 @@
                 android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="11dp"
+            android:src="@drawable/ic_add_black_24dp"
+            android:visibility="invisible"
+            app:backgroundTint="@color/colorPrimary"
+            tools:layout_editor_absoluteX="349dp"
+            tools:layout_editor_absoluteY="675dp" />
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
