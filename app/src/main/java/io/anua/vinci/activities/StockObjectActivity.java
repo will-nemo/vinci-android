@@ -34,7 +34,8 @@ public class StockObjectActivity extends AppCompatActivity {
     private TextView stockSymbol, companyName, openValue, closeValue, highValue,
             lowValue, week52High, week52Low, marketCap, changeValue;
 
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButtonAdd;
+    private FloatingActionButton floatingActionButtonDelete;
 
     /**************************
      * LifeCycle Methods
@@ -53,7 +54,8 @@ public class StockObjectActivity extends AppCompatActivity {
         firebaseAuthService = FirebaseAuth.getInstance();
         firebaseFirestoreService = FirebaseFirestore.getInstance();
 
-        floatingActionButton = findViewById(R.id.fab);
+        floatingActionButtonAdd = findViewById(R.id.fab_add);
+        floatingActionButtonDelete = findViewById(R.id.fab_delete);
 
         stockSymbol = findViewById(R.id.stock_symbol);
         companyName = findViewById(R.id.company_name);
@@ -95,7 +97,8 @@ public class StockObjectActivity extends AppCompatActivity {
             final String stockSymbolValue;
 
             if (stockObjectBundle != null) {
-                View view = findViewById(R.id.fab);
+                final View addView = findViewById(R.id.fab_add);
+                final View deleteView = findViewById(R.id.fab_delete);
 
                 isUserStock = stockObjectBundle.getBoolean(Vinci_MetadataConstants.IS_USER_STOCK);
                 stockSymbolValue = stockObjectBundle.getString(Vinci_MetadataConstants.STOCK_SYMBOL);
@@ -113,22 +116,17 @@ public class StockObjectActivity extends AppCompatActivity {
                 formatChangeValue(stockObjectBundle.getDouble(Vinci_MetadataConstants.CHANGE_VALUE));
 
                 if(isUserStock) {
-                    view.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                    deleteView.setVisibility(View.VISIBLE);
                 }
                 else {
-                    view.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00BFA5")));
+                    addView.setVisibility(View.VISIBLE);
                 }
 
-                view.setOnClickListener(new View.OnClickListener() {
+                addView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ArrayList<String> defaultUserStocks  = stockObjectBundle.getStringArrayList(Vinci_MetadataConstants.DEFAULT_USER_STOCKS);
-                        if(isUserStock){
-                            defaultUserStocks.remove(defaultUserStocks.indexOf(stockSymbolValue));
-                        }
-                        else {
-                            defaultUserStocks.add(stockSymbol.getText().toString());
-                        }
+                        defaultUserStocks.add(stockSymbol.getText().toString());
 
                         String userID = "";
                         FirebaseUser firebaseUser = firebaseAuthService.getCurrentUser();
@@ -136,9 +134,29 @@ public class StockObjectActivity extends AppCompatActivity {
                             userID = firebaseUser.getUid();
                         }
                         firebaseFirestoreService.collection("users").document(userID).update("userStocks",  SymbolParserUtil.concatSymbols(defaultUserStocks));
+
+                        addView.setVisibility(View.INVISIBLE);
+                        deleteView.setVisibility(View.VISIBLE);
                     }
                 });
-                view.setVisibility(View.VISIBLE);
+
+                deleteView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<String> defaultUserStocks  = stockObjectBundle.getStringArrayList(Vinci_MetadataConstants.DEFAULT_USER_STOCKS);
+                        defaultUserStocks.remove(defaultUserStocks.indexOf(stockSymbolValue));
+
+                        String userID = "";
+                        FirebaseUser firebaseUser = firebaseAuthService.getCurrentUser();
+                        if(firebaseUser != null) {
+                            userID = firebaseUser.getUid();
+                        }
+                        firebaseFirestoreService.collection("users").document(userID).update("userStocks",  SymbolParserUtil.concatSymbols(defaultUserStocks));
+
+                        deleteView.setVisibility(View.INVISIBLE);
+                        addView.setVisibility(View.VISIBLE);
+                    }
+                });
             }
     }
 

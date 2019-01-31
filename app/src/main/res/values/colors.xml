@@ -5,4 +5,5 @@
     <color name="colorAccent">#ffffff</color>
     <color name="recyclerViewColor">#b0bec5</color>
     <color name="black">#000</color>
+    <color name="RED">#FF0000</color>
 </resources>
