@@ -1,5 +1,5 @@
 # Vinci
-Android Mobile Application to view technology stocks.
+Android Mobile Application to view owned stocks.
 
 -----------------------------------------------------------
 
