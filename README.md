@@ -1,5 +1,5 @@
 # Vinci
-Android Mobile Application to view technology stocks.
+Android Mobile Application to view owned stocks.
 
 -----------------------------------------------------------
 
@@ -44,12 +44,12 @@ In the StockDisplayActivity.java, the string is parsed and mapped to display the
 
 1. ~~Ability to click on stocks and display more information.~~
 2. ~~Ability to add stocks to default list to be displayed.~~
-3. ~~Ability to delete stocks from default list to be displayed.
-4. Query name of Company and stock symbol
+3. ~~Ability to delete stocks from default list to be displayed.~~
+4. ~~Query name of Company and stock symbol~~
 5. Splash Screen
 6. Navigation Drawer
 7. Give user ability to log out
 8. Give user ability to create bug ticket
-9. Filter query for only tech companies
+9. ~~Filter query for only tech companies~~
 10. Error screens 
 11. About us pages
