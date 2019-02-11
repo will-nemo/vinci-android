@@ -1,4 +1,4 @@
-<img src="/app/src/main/res/drawable/vinci_playball.png" alt="My cool logo"/>
+<img src="/app/src/main/res/drawable/vinci_playball.png" alt="Vinci logo"/>
 
 Android Mobile Application Stock Wallet
 
