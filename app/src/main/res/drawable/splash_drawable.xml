@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+    <item android:drawable="@color/colorPrimaryDark"/>
+    <item>
+        <bitmap
+            android:src="@drawable/vinci_playball"
+            android:gravity="center"/>
+    </item>
+</layer-list>
