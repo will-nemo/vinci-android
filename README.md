@@ -1,4 +1,7 @@
 # Vinci
+
+<img src="https://raw.githubusercontent.com/anua-software/vinci/master/app/src/main/res/drawable/vinci_playball.png?sanitize=true&raw=true" />
+
 Android Mobile Application to view owned stocks.
 
 -----------------------------------------------------------
