@@ -1,8 +1,6 @@
-# Vinci
+<img src="/app/src/main/res/drawable/vinci_playball.png" alt="My cool logo"/>
 
-<img src="https://raw.githubusercontent.com/anua-software/vinci/master/app/src/main/res/drawable/vinci_playball.png?sanitize=true&raw=true" />
-
-Android Mobile Application to view owned stocks.
+Android Mobile Application Stock Wallet
 
 -----------------------------------------------------------
 
@@ -49,7 +47,7 @@ In the StockDisplayActivity.java, the string is parsed and mapped to display the
 2. ~~Ability to add stocks to default list to be displayed.~~
 3. ~~Ability to delete stocks from default list to be displayed.~~
 4. ~~Query name of Company and stock symbol~~
-5. Splash Screen
+5. ~~Splash Screen~~
 6. Navigation Drawer
 7. Give user ability to log out
 8. Give user ability to create bug ticket
